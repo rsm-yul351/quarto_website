@@ -1,3 +1,3 @@
 ---
-title: "Project 1"
+title: "A Replication of Karlan and List (2007)"
 ---

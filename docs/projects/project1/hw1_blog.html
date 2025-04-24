@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yuxing Liu">
-<meta name="dcterms.date" content="2025-04-23">
+<meta name="dcterms.date" content="2025-04-24">
 
 <title>A Replication of Karlan and List (2007) – Yuxing Liu’s Website</title>
 <style>
@@ -104,10 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
-
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -229,7 +226,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 23, 2025</p>
+      <p class="date">April 24, 2025</p>
     </div>
   </div>
   
@@ -253,7 +250,7 @@ window.Quarto = {
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>We begin by reading the Stata data file (karlan_list_2007.dta) into Python using Pandas. This dataset comes from Karlan and List’s 2007 field experiment and contains 50,000 observations (one for each fundraising letter) and over 50 variables that document experimental assignments, donation outcomes, and donor characteristics. The experimental design includes indicators for whether the letter was a control or a treatment (matching/challenge) along with features such as the match ratio (e.g., 1:1, 2:1, or 3:1) and the match threshold (e.g., $25,000, $50,000, $100,000, or unstated). In addition, the dataset contains variables that measure donor characteristics (e.g.&nbsp;previous donation history, demographic information, and proxy measures for political environment) that allow for an analysis of heterogeneous effects.</p>
-<div id="c42f737f" class="cell" data-execution_count="1">
+<div id="9027e587" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -425,7 +422,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="ebbb8c9a" class="cell" data-execution_count="2">
+<div id="5667c2a7" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -661,7 +658,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="b272cfe3" class="cell" data-execution_count="3">
+<div id="2859d132" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by treatment and compute average donation and response rate</span></span>
@@ -1039,7 +1036,7 @@ treatment      0.0137      0.115      0.119      0.905      -0.211       0.238
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\22344\AppData\Local\Temp\ipykernel_36788\256720481.py:10: FutureWarning:
+<pre><code>C:\Users\22344\AppData\Local\Temp\ipykernel_1044\256720481.py:10: FutureWarning:
 
 
 
@@ -1079,7 +1076,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </div>
 </div>
 <p>Bivariate Linear Regression</p>
-<div id="babac105" class="cell" data-execution_count="8">
+<div id="d85e329e" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model_lm <span class="op">=</span> smf.ols(<span class="st">"gave ~ treatment"</span>, data<span class="op">=</span>data).fit()</span>
@@ -1099,7 +1096,7 @@ treatment      0.0042      0.001      3.101      0.002       0.002       0.007
 <p>The t-test result shows a t-statistic of 3.10 and a p-value of 0.0019, which is well below the common threshold of 0.05. This means the observed difference in donation rates is very unlikely to be due to chance. The regression confirms this: the estimated treatment effect (treatment coefficient) is 0.0042, or about a 0.42 percentage point increase in the likelihood of donating for those who received the matching offer. Although this might sound small, it’s a relative increase of over 23% compared to the control group’s base rate of ~1.8% (the intercept).</p>
 <p>These findings are a powerful demonstration of how framing and perceived impact can affect real-world decisions. Even though the monetary benefit to the donor doesn’t change, simply highlighting that their donation will be matched makes giving feel more impactful or worthwhile. This reflects a broader pattern in behavioral economics: people are more motivated when they believe their actions make a bigger difference People aren’t just giving because they can—they’re giving because the matching offer increases the perceived value of their contribution. This supports the theoretical idea that lowering the “price” of a public good (or increasing its “value”) increases its provision, even in voluntary settings.</p>
 <p>To assess the effect of being offered a matched donation on the likelihood of donating, we estimate a probit regression where the outcome is a binary variable (gave) indicating whether a donation was made. The key independent variable is the treatment assignment (treatment = 1 if the individual received a letter with a matching grant, 0 otherwise).</p>
-<div id="8b52d686" class="cell" data-execution_count="9">
+<div id="7a77176c" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data_n <span class="op">=</span> data.dropna(subset<span class="op">=</span>[<span class="st">"gave"</span>])</span>
@@ -1119,8 +1116,8 @@ Probit Regression Results (dependent variable: gave):
 Dep. Variable:                   gave   No. Observations:                50083
 Model:                         Probit   Df Residuals:                    50081
 Method:                           MLE   Df Model:                            1
-Date:                Wed, 23 Apr 2025   Pseudo R-squ.:               0.0009783
-Time:                        23:45:38   Log-Likelihood:                -5030.5
+Date:                Thu, 24 Apr 2025   Pseudo R-squ.:               0.0009783
+Time:                        00:04:00   Log-Likelihood:                -5030.5
 converged:                       True   LL-Null:                       -5035.4
 Covariance Type:            nonrobust   LLR p-value:                  0.001696
 ==============================================================================
@@ -1140,7 +1137,7 @@ treatment      0.0868      0.028      3.113      0.002       0.032       0.141
 <ol type="1">
 <li>T-test by Match Ratio We first restrict our analysis to the treatment group, then calculate the donation rate (mean of gave) for each match ratio, and finally perform t-tests.</li>
 </ol>
-<div id="89c576a3" class="cell" data-execution_count="10">
+<div id="86b3815c" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>treatment_data <span class="op">=</span> data[data[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">1</span>].dropna(subset<span class="op">=</span>[<span class="st">"gave"</span>])</span>
@@ -1180,7 +1177,7 @@ T-test for 2:1 vs 3:1 match rates:
 <ol start="2" type="1">
 <li>Regression Analysis by Match Ratio We now create a variable ratio1 (which is identical to ratio) for clarity, and then regress gave on the match ratio dummies without an intercept.</li>
 </ol>
-<div id="373c84c9" class="cell" data-execution_count="11">
+<div id="40c6edd7" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>treatment_data <span class="op">=</span> treatment_data.copy()</span>
@@ -1214,7 +1211,7 @@ divide by zero encountered in scalar divide
 <ol start="3" type="1">
 <li>Calculating and Comparing Differences</li>
 </ol>
-<div id="cf65f590" class="cell" data-execution_count="12">
+<div id="4eac4b58" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>treatment_data <span class="op">=</span> treatment_data.copy()</span>
@@ -1260,7 +1257,7 @@ Fitted Coefficient Differences:
 <li>The increased likelihood of donating, and</li>
 <li>The actual amount given among donors.</li>
 </ul>
-<div id="cbe543f5" class="cell" data-execution_count="13">
+<div id="81b6f3ca" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>data_n <span class="op">=</span> data.dropna(subset<span class="op">=</span>[<span class="st">"amount"</span>])</span>
@@ -1295,7 +1292,7 @@ treatment      0.1536      0.083      1.861      0.063      -0.008       0.315
 </div>
 <p>The t‑test produced a t‑statistic of approximately 1.861 with a p‑value of 0.0628. This result is marginally non‑significant by the conventional 0.05 threshold, suggesting that—when considering the entire sample—the average donation in the treatment group is somewhat higher than in the control group, but the evidence is not strong enough to conclusively rule out that this difference might be due to chance. The estimated intercept was 0.8133, and the treatment coefficient was 0.1536 with a corresponding t‑statistic of 1.861 and a p‑value of 0.063. These results are consistent with the t‑test.</p>
 <p>There is an increase in the overall donation amount when a matching donation offer is included. However, much of this overall effect is likely driven by an increase in the probability of donating rather than by a substantially higher donation amount among those who do give. That is, while the matching offer appears to encourage more people to donate, it does not necessarily lead existing donors to give much more money.</p>
-<div id="020724b5" class="cell" data-execution_count="14">
+<div id="94882088" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>data_n <span class="op">=</span> data.dropna(subset<span class="op">=</span>[<span class="st">"amount"</span>])</span>
