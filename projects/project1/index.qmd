@@ -1,3 +1,0 @@
----
-title: "A Replication of Karlan and List (2007)"
----
