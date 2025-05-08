@@ -173,16 +173,19 @@ Next, we extend our simple Poisson model to a Poisson Regression Model such that
 ```{python}
 def poisson_regression_neg_loglikelihood(beta, Y, X):
     linear_predictor = np.dot(X, beta)
+    
+    # Ensure the linear_predictor and Y are handled as numpy arrays for element-wise operations
+    linear_predictor = np.array(linear_predictor)
+    
+    # Calculate the log-likelihood for Poisson regression
     log_likelihood = np.sum(Y * linear_predictor - np.exp(linear_predictor) - np.log(factorial(Y)))
-    return -log_likelihood
+    
+    return -log_likelihood 
 ```
 
 _todo: Use your function along with R's optim() or Python's sp.optimize() to find the MLE vector and the Hessian of the Poisson model with covariates. Specifically, the first column of X should be all 1's to enable a constant term in the model, and the subsequent columns should be age, age squared, binary variables for all but one of the regions, and the binary customer variable. Use the Hessian to find standard errors of the beta parameter estimates and present a table of coefficients and standard errors._
 
 ```{python}
-# initial_beta = np.zeros(X.shape[1])
-
-# # Use scipy.optimize.minimize to find the MLE (negative log-likelihood)
 # result = minimize(poisson_regression_neg_loglikelihood, initial_beta, args=(Y, X), method='BFGS')
 
 # # Extract estimated coefficients (MLE) and Hessian matrix
