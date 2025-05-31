@@ -1,7 +1,7 @@
 ---
 title: "A Replication of Karlan and List (2007)"
 author: "Yuxing Liu"
-date: today
+date: May 28, 2025
 callout-appearance: minimal # this hides the blue "i" icon on .
 format:
   html:
