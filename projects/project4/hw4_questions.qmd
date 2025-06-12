@@ -1,15 +1,12 @@
 ---
-title: "Add Title"
+title: "Unsupervised and Supervised Machine Learning: K-Means Clustering and K-Nearest Neighbors"
 author: "Yuxing Liu"
-date: today
+date: June 11, 2025
 format: html
 execute:
   warning: false
 jupyter: python3
 ---
-
-_todo: do two analyses.  Do one of either 1a or 1b, AND one of either 2a or 2b._
-
 
 ## 1a. K-Means
 ### Introduction
@@ -209,8 +206,7 @@ Based on both metrics, three clusters (K=3) is the most appropriate choice. This
 
 ## 2a. K Nearest Neighbors
 
-_todo: use the following code (or the python equivalent) to generate a synthetic dataset for the k-nearest neighbors algorithm.  The code generates a dataset with two features, `x1` and `x2`, and a binary outcome variable `y` that is determined by whether `x2` is above or below a wiggly boundary defined by a sin function._
-
+:::: {.callout-note collapse="true"}
 ```{r}
 # gen data -----
 set.seed(42)
@@ -224,23 +220,200 @@ boundary <- sin(4*x1) + x1
 y <- ifelse(x2 > boundary, 1, 0) |> as.factor()
 dat <- data.frame(x1 = x1, x2 = x2, y = y)
 ```
+::::
 
-_todo: plot the data where the horizontal axis is `x1`, the vertical axis is `x2`, and the points are colored by the value of `y`.  You may optionally draw the wiggly boundary._
+We begin by creating a synthetic dataset with two features and a binary outcome. The class boundary is a nonlinear, wavy function defined by a sine curve. This setup tests the ability of KNN to handle nonlinear decision boundaries.
 
-_todo: generate a test dataset with 100 points, using the same code as above but with a different seed._
+:::: {.callout-note collapse="true"}
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-_todo: implement KNN by hand.  Check you work with a built-in function -- eg, `class::knn()` or `caret::train(method="knn")` in R, or scikit-learn's `KNeighborsClassifier` in Python._
+# Set random seed for reproducibility
+np.random.seed(42)
 
-_todo: run your function for k=1,...,k=30, each time noting the percentage of correctly-classified points from the test dataset. Plot the results, where the horizontal axis is 1-30 and the vertical axis is the percentage of correctly-classified points. What is the optimal value of k as suggested by your plot?_ 
+n = 100
+x1 = np.random.uniform(-3, 3, n)
+x2 = np.random.uniform(-3, 3, n)
 
+# Define the wiggly boundary
+boundary = np.sin(4 * x1) + x1
 
+# Assign binary label
+y = (x2 > boundary).astype(int)
 
-## 2b. Key Drivers Analysis
+# Assemble DataFrame
+dat = pd.DataFrame({'x1': x1, 'x2': x2, 'y': y})
 
-_todo: replicate the table on slide 75 of the session 5 slides. Specifically, using the dataset provided in the file data_for_drivers_analysis.csv, calculate: pearson correlations, standardized regression coefficients, "usefulness", Shapley values for a linear regression, Johnson's relative weights, and the mean decrease in the gini coefficient from a random forest. You may use packages built into R or Python; you do not need to perform these calculations "by hand."_
+dat.head()
 
-_If you want a challenge, add additional measures to the table such as the importance scores from XGBoost, from a Neural Network, or from any additional method that measures the importance of variables._
+```
+::::
 
+We start by plotting the synthetic dataset, with `x1` on the horizontal axis, `x2` on the vertical axis, and colors indicating class membership (`y`). The wiggly decision boundary is shown as a dashed curve.
+```{python}
+# Generate training data
+np.random.seed(42)
+n = 100
+x1_train = np.random.uniform(-3, 3, n)
+x2_train = np.random.uniform(-3, 3, n)
+boundary_train = np.sin(4 * x1_train) + x1_train
+y_train = (x2_train > boundary_train).astype(int)
+train = pd.DataFrame({'x1': x1_train, 'x2': x2_train, 'y': y_train})
+
+# Plot
+plt.figure(figsize=(6,5))
+plt.scatter(train['x1'], train['x2'], c=train['y'], cmap='coolwarm', s=40, edgecolor='k', label='Data')
+x1_grid = np.linspace(-3, 3, 300)
+boundary_curve = np.sin(4 * x1_grid) + x1_grid
+plt.plot(x1_grid, boundary_curve, 'k--', label='True boundary')
+plt.xlabel('x1')
+plt.ylabel('x2')
+plt.title('Synthetic Data with Wiggly Boundary')
+plt.legend()
+plt.show()
+```
+
+The first plot displays the training data for our KNN exercise. Each point represents an observation with features x1 and x2:
+
+- Color coding: Points are colored by their true class (y=0 or y=1), assigned according to whether they fall above or below the nonlinear (wiggly) boundary.
+
+- Dashed curve: The dashed black line is the true decision boundary, defined by x2 =sin (4 x1) + x1. This boundary separates the two classes in a non-linear way.
+
+- Randomness: The specific arrangement of points is determined by a fixed random seed, ensuring reproducibility for training.
+
+This training dataset presents a realistic, non-linear classification challenge for KNN. The boundary’s complexity highlights the algorithm’s ability to handle data that isn’t linearly separable.
+
+We use the same process, but a different random seed to ensure our test data is independent.
+```{python}
+# Generate test data
+np.random.seed(7)  # different seed!
+x1_test = np.random.uniform(-3, 3, n)
+x2_test = np.random.uniform(-3, 3, n)
+boundary_test = np.sin(4 * x1_test) + x1_test
+y_test = (x2_test > boundary_test).astype(int)
+test = pd.DataFrame({'x1': x1_test, 'x2': x2_test, 'y': y_test})
+
+# Quick plot to check
+plt.figure(figsize=(6,5))
+plt.scatter(test['x1'], test['x2'], c=test['y'], cmap='coolwarm', s=40, edgecolor='k', label='Test Data')
+plt.plot(x1_grid, np.sin(4 * x1_grid) + x1_grid, 'k--', label='True boundary')
+plt.xlabel('x1')
+plt.ylabel('x2')
+plt.title('Test Data with Wiggly Boundary')
+plt.legend()
+plt.show()
+```
+
+The second plot shows the test data generated in the same way, but with a different random seed:
+
+- Color coding: Again, points are colored by their true class, with blue and red representing the two groups.
+
+- Dashed curve: The true decision boundary is plotted identically to the training set, showing where the theoretical separation lies.
+
+- Random seed: This dataset is entirely independent of the training set due to the different seed, providing an unbiased way to measure model performance.
+
+The test dataset mimics the structure and complexity of the training data but contains new, unseen points. Evaluating KNN predictions on this set helps us judge how well the model generalizes to new data, especially when the true class boundary is nonlinear.
+
+### Implement KNN
+
+We now implement the KNN algorithm from scratch for binary classification.
+
+```{python}
+def knn_predict(X_train, y_train, X_test, k=5):
+    preds = []
+    for test_point in X_test:
+        # Compute distances to all training points
+        distances = np.sqrt(((X_train - test_point) ** 2).sum(axis=1))
+        # Find the k nearest neighbors
+        nearest_idx = np.argsort(distances)[:k]
+        nearest_labels = y_train[nearest_idx]
+        # Majority vote
+        pred = np.round(nearest_labels.mean()).astype(int)
+        preds.append(pred)
+    return np.array(preds)
+
+# Prepare features
+X_train = train[['x1', 'x2']].values
+y_train_arr = train['y'].values
+X_test = test[['x1', 'x2']].values
+y_test_arr = test['y'].values
+
+# Predict with k=5
+y_pred_hand = knn_predict(X_train, y_train_arr, X_test, k=5)
+
+# Accuracy
+acc_hand = (y_pred_hand == y_test_arr).mean()
+print(f"Hand-implemented KNN Accuracy (k=5): {acc_hand:.2f}")
+```
+
+#### Check with scikit-learn
+Now let’s check using KNeighborsClassifier from scikit-learn:
+
+:::: {.callout-note collapse="true"}
+```{python}
+from sklearn.neighbors import KNeighborsClassifier
+
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train, y_train_arr)
+y_pred_sklearn = knn.predict(X_test)
+acc_sklearn = (y_pred_sklearn == y_test_arr).mean()
+print(f"scikit-learn KNN Accuracy (k=5): {acc_sklearn:.2f}")
+
+# Confirm the predictions are nearly identical
+np.all(y_pred_hand == y_pred_sklearn)
+```
+::::
+
+The scikit-learn KNN classifier with k=5 neighbors achieves an accuracy of 0.88 on the independent test dataset.
+
+An accuracy of 0.88 means that 88% of test points were correctly classified according to the true, nonlinear boundary. This high accuracy shows that KNN is well-suited for data with complex, wavy boundaries, like the one in our synthetic example.
+
+If the hand-coded KNN gives the same result, it confirms the implementation is correct and matches the trusted scikit-learn library.
+
+Because the test set uses different random samples, this accuracy reflects how well KNN generalizes—not just how well it “memorizes” the training data.
+
+Conclusion:
+The KNN model, with k=5, performs very well on this challenging classification task, highlighting its effectiveness for problems with nonlinear class boundaries.
+
+### Tuning k in KNN
+To find the best value for k in KNN, we test all values from 1 to 30 and record the classification accuracy on the test dataset.
+
+```{python}
+from sklearn.neighbors import KNeighborsClassifier
+
+k_values = np.arange(1, 31)
+accuracy_scores = []
+
+for k in k_values:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(X_train, y_train_arr)
+    score = knn.score(X_test, y_test_arr)
+    accuracy_scores.append(score * 100)  # percentage
+
+plt.figure(figsize=(8,5))
+plt.plot(k_values, accuracy_scores, marker='o')
+plt.xlabel("Number of Neighbors (k)")
+plt.ylabel("Accuracy (%)")
+plt.title("KNN Test Accuracy vs. k")
+plt.xticks(k_values)
+plt.grid(True)
+plt.show()
+```
+
+The plot above shows how the KNN classifier’s accuracy on the test set changes as the number of neighbors (k) increases from 1 to 30.
+
+Peak accuracy:
+The highest test accuracy occurs at k=3, where accuracy reaches 90%. This means that, for this synthetic dataset, a small value of k allows the classifier to best capture the wiggly, nonlinear class boundary while still providing some noise reduction compared to k=1.
+
+General trend:
+As k increases beyond 3, the accuracy gradually decreases. This is expected: larger values of k lead to more smoothing and can underfit the data, missing important local structure, especially with a nonlinear boundary.
+
+Model selection:
+The optimal value of k is thus k=3, as suggested by the peak in the plot. Lower or higher values of k result in slightly worse classification performance.
+
+For this dataset and task, choosing k=3 provides the best trade-off between flexibility and stability, maximizing accuracy on unseen data.
 
 
 

@@ -3,9 +3,9 @@
     "listing": "/projects.html",
     "items": [
       "/projects/project1/hw1_blog.html",
-      "/projects/project4/hw4_questions.html",
       "/projects/project3/hw3_questions.html",
-      "/projects/project2/hw2_questions.html"
+      "/projects/project2/hw2_questions.html",
+      "/projects/project4/hw4_questions.html"
     ]
   }
 ]
