@@ -348,7 +348,7 @@ Note
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="751f721b" class="cell" data-execution_count="1">
+<div id="4bafc794" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
@@ -384,7 +384,7 @@ Note
 <h2 class="anchored" data-anchor-id="estimation-via-maximum-likelihood">4. Estimation via Maximum Likelihood</h2>
 <p>To estimate the parameters of the multinomial logit (MNL) model, we implement the log-likelihood function and use numerical optimization to find the parameter values that maximize it.</p>
 <p>We implement this as a negative log-likelihood function (for minimization) across all choice sets.</p>
-<div id="baffda10" class="cell" data-execution_count="2">
+<div id="fc12500a" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
@@ -419,7 +419,7 @@ Note
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="9aa23bea" class="cell" data-execution_count="3">
+<div id="508e8083" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> prepared_df[[<span class="st">'brand_N'</span>, <span class="st">'brand_P'</span>, <span class="st">'ad_YES'</span>, <span class="st">'price'</span>]].values</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> prepared_df[<span class="st">'choice'</span>].values</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>groups <span class="op">=</span> prepared_df.groupby([<span class="st">'resp'</span>, <span class="st">'task'</span>]).ngroup().values</span>
@@ -492,7 +492,7 @@ Note
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="c6cfd11c" class="cell" data-execution_count="4">
+<div id="b988bab4" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Helper functions ---</span></span>
@@ -594,7 +594,7 @@ Note
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="f21c918b" class="cell" data-execution_count="5">
+<div id="7d382d27" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>param_names <span class="op">=</span> [<span class="st">'beta_netflix'</span>, <span class="st">'beta_prime'</span>, <span class="st">'beta_ads'</span>, <span class="st">'beta_price'</span>]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick one parameter to show detailed plots (e.g., beta_netflix = column 0)</span></span>
@@ -631,7 +631,7 @@ Note
 <p>Trace Plot (left): The trace plot shows the sampled values of beta_netflix across 10,000 post-burn-in MCMC iterations. The chain appears to mix well, rapidly exploring the parameter space without getting stuck for long stretches. This behavior suggests good convergence of the sampler and indicates that our posterior summaries are reliable.</p>
 <p>Posterior Histogram (right): The histogram displays the empirical posterior distribution for beta_netflix. The distribution is unimodal and approximately symmetric, centered around 0.94. This shape indicates that the data provide clear evidence about the magnitude of the brand preference for Netflix, and there is little posterior probability assigned to much lower or higher values.</p>
 <p>Next, we summarize the posterior samples for all four parameters. For each parameter, we report the posterior mean, standard deviation, and 95% credible interval. We also provide the maximum likelihood estimate (MLE) and its 95% confidence interval from the previous analysis, so we can directly compare the Bayesian and frequentist results.</p>
-<div id="798059b4" class="cell" data-execution_count="6">
+<div id="56e4e338" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bayesian posterior summaries</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mean_post <span class="op">=</span> posterior_samples.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sd_post <span class="op">=</span> posterior_samples.std(axis<span class="op">=</span><span class="dv">0</span>)</span>
